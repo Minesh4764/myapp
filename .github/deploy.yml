@@ -2,7 +2,7 @@ name: Build and push Docker image with digital ocean
 
 on:
   push:
-    branches: [main, master]
+    branches: master
 
 env:
   IMAGE_NAME: my-flask-app
