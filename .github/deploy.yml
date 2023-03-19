@@ -2,27 +2,24 @@ name: Build and push Docker image
 
 on:
   push:
-    branches:
-      - master
+    branches: [main]
 
 env:
   IMAGE_NAME: my-flask-app
+  REGISTRY_NAME: testinggitaction
 
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout the code
+      - name: Checkout code
         uses: actions/checkout@v2
-      - name: Login to Docker registry
-        uses: docker/login-action@v1
-        with:
-          registry: registry.digitalocean.com/testinggitaction
-          username: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-          password: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-      - name: Build the Docker image
+      - name: Build and push Docker image
         uses: docker/build-push-action@v2
         with:
           context: .
           push: true
-          tags: registry.digitalocean.com/testinggitaction/my-flask-app:latest
+          tags: registry.digitalocean.com/${{ env.REGISTRY_NAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+        env:
+          DOCKER_USERNAME: ${{ secrets.DIGITALOCEAN_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
