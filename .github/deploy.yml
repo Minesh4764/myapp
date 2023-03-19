@@ -17,8 +17,7 @@ jobs:
         with:
           registry: registry.digitalocean.com
           username: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-          password: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-    steps:      
+          password: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }} 
     - name: Checkout code
         uses: actions/checkout@v2
       - name: Build and push Docker image
