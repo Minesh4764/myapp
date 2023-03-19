@@ -3,7 +3,7 @@ name: Build and push Docker image
 on:
   push:
     branches:
-      - main
+      - master
 
 env:
   IMAGE_NAME: my-flask-app
@@ -17,7 +17,7 @@ jobs:
       - name: Login to Docker registry
         uses: docker/login-action@v1
         with:
-          registry: registry.digitalocean.com
+          registry: registry.digitalocean.com/testinggitaction
           username: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
           password: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
       - name: Build the Docker image
