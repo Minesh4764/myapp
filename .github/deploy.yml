@@ -1,13 +1,13 @@
 name: Build and push Docker image on this
+on: 
 
-on:
   push:
-    branches: [main, master]
-
+    branches:
+      - main
+      - master
 env:
   IMAGE_NAME: my-flask-app
   REGISTRY_NAME: testinggitaction
-
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
