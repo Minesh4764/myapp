@@ -17,4 +17,6 @@ EXPOSE 80
 ENV NAME World
 
 # Run app.py when the container launches
-CMD ["python", "app.py"]
+#CMD ["python", "app.py"]
+#CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:8000", "app"]
+CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:80", "app:app"]
