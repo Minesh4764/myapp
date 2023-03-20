@@ -1,22 +1,43 @@
-# Use an official Python runtime as a parent image
-FROM python:3.8-slim-buster
 
-# Set the working directory to /app
+# FROM python:3.8-slim-buster
+
+
+# WORKDIR /app
+
+# COPY . /app
+
+
+# RUN pip install -r requirements.txt 
+
+# EXPOSE 80
+
+
+# ENV NAME World
+
+# CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:80", "app:app"]
+FROM python:3.9
+
+RUN apt-get update && apt-get install -y cron
+
+COPY my-cron-job /etc/cron.d/my-cron-job
+RUN chmod 0644 /etc/cron.d/my-cron-job
+
+RUN touch /var/log/cron.log
+
 WORKDIR /app
 
-# Copy the current directory contents into the container at /app
-COPY . /app
+COPY requirements.txt .
 
-# Install any needed packages specified in requirements.txt
-RUN pip install -r requirements.txt 
+RUN pip install -r requirements.txt
 
-# Make port 80 available to the world outside this container
-EXPOSE 80
+COPY . .
 
-# Define environment variable
-ENV NAME World
+ENV DIGITALOCEAN_REGISTRY registry.digitalocean.com/testinggitaction
+ENV DIGITALOCEAN_REPOSITORY my-flask-app
 
-# Run app.py when the container launches
-#CMD ["python", "app.py"]
-#CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:8000", "app"]
-CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:80", "app:app"]
+RUN echo "*/5 * * * * root docker pull ${DIGITALOCEAN_REGISTRY}/${DIGITALOCEAN_REPOSITORY}:latest && docker run --rm ${DIGITALOCEAN_REGISTRY}/${DIGITALOCEAN_REPOSITORY}:latest" > /etc/cron.d/my-cron-job
+RUN chmod 0644 /etc/cron.d/my-cron-job
+RUN crontab /etc/cron.d/my-cron-job
+RUN touch /var/log/cron.log
+
+CMD cron && tail -f /var/log/cron.log
