@@ -3,7 +3,8 @@ COPY /root/.s3cfg /root/.s3cfg
 
 FROM python:3.9
 
-RUN apt-get update && apt-get install -y s3cmd
+RUN apt-get update && apt-get install -y s3cmd cron
+RUN service cron start
 
 WORKDIR /app
 
