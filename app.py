@@ -2,7 +2,7 @@ from flask import Flask
 import signal
 from datetime import datetime
 app = Flask(__name__)
-
+import os
 import logging
 import sys
 
@@ -35,9 +35,30 @@ logger.info('Starting the app')
 logger.info('Application finished')
 @app.route("/")
 def home():
+    logger.info("staring the app,")
     print("thisis jsut a test")
     now = datetime.now()
     return f"Hello, World! Minesh Patel{now}"
+def libre_translate(text, source_lang, target_lang):
+
+    endpoint = 'https://translate.appbucket.tools/translate'
+    libre_translate_api_key = os.environ['LIBRE_API_KEY']
+    headers = {
+        'Authorization': f'Bearer {libre_translate_api_key}',
+        'Content-Type': 'application/json'
+    }
+    data = {
+        'q': text,
+        'source': source_lang,
+        'target': target_lang
+    }
+    response = requests.post(endpoint, headers=headers, json=data)
+    if response.ok:
+        return response.json()
+    else:
+        raise ValueError(f'Request failed with status {response.status_code}: {response.text}')
+
+
 
 def shutdown_server(signum, frame):
     print('Received signal %s, shutting down server...' % signum)
@@ -47,5 +68,5 @@ def shutdown_server(signum, frame):
     func()
 
 
-if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=82)
+# if __name__ == "__main__":
+#     app.run(host='0.0.0.0', port=82)
