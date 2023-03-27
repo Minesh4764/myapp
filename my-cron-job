@@ -1,1 +1,1 @@
-*/1 * * * * root python /app/app.py >> /var/log/testlog.log 2>&1 && s3cmd put /var/log/testlog.log s3://testpipeline/Dockerlogs/doclogs.log
+*/1 * * * * root python /app/app.py >> /var/log/testlog.log 2>&1 && s3cmd put /var/log/testlog.log s3://testpipeline/Dockerlogs/dockerlogs.log
