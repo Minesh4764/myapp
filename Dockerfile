@@ -1,3 +1,6 @@
+FROM python:3.9 AS builder
+COPY /root/.s3cfg /root/.s3cfg
+
 FROM python:3.9
 
 RUN apt-get update && apt-get install -y s3cmd
@@ -9,7 +12,7 @@ RUN pip install -r requirements.txt
 
 COPY app.py /app/
 COPY my-cron-job /etc/cron.d/
-COPY .s3cfg /root/.s3cfg
+#COPY .s3cfg /root/.s3cfg
 
 RUN chmod 0644 /etc/cron.d/my-cron-job
 RUN touch /var/log/testlog.log
