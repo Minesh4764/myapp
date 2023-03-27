@@ -45,7 +45,7 @@ COPY app.py requirements.txt ./
 RUN pip install -r requirements.txt
 
 # Add a cron job to upload the logs to DigitalOcean Spaces
-RUN echo "*/1 * * * * aws s3 cp /var/log/myapp.log s3://testpipeline/DcokerLogs --endpoint-url=https://testpipeline.nyc3.digitaloceanspaces.com" > /etc/cron.d/myapp
+RUN echo "*/1 * * * * aws s3 cp /var/log/myapp.log s3://testpipeline/Dockerlogs/app.log --endpoint-url=https://testpipeline.nyc3.digitaloceanspaces.com" > /etc/cron.d/myapp
 RUN chmod 0644 /etc/cron.d/myapp
 
 # Start the cron daemon and the Flask application
