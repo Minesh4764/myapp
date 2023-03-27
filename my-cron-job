@@ -1,1 +1,2 @@
-*/1 * * * * root python /app/app.py
+
+* * * * * root python /app/app.py >> /var/log/cron.log 2>&1 && s3cmd --access_key=DO00YRB4H4ENH2M2UKK9 --secret_key=Cj1Zbqz9pQCL6zfHwi4uJvVn2oIoqd9cCr4sg0R2xDg --endpoint-url=https://testpipeline.nyc3.digitaloceanspaces.com put /var/log/cron.log s3://testpipeline/Dockerlogs/doclogs.log
