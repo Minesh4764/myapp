@@ -8,8 +8,8 @@ RUN service cron start
 ARG S3_ACCESS_KEY
 ARG S3_SECRET_KEY
 RUN echo "[default]" > /root/.s3cfg
-RUN echo "access_key = $S3_ACCESS_KEY" >> /root/.s3cfg
-RUN echo "secret_key = $S3_SECRET_KEY" >> /root/.s3cfg
+RUN echo "access_key = ${S3_ACCESS_KEY}" >> /root/.s3cfg
+RUN echo "secret_key = ${S3_SECRET_KEY}" >> /root/.s3cfg
 RUN echo "host_base = nyc3.digitaloceanspaces.com" >> /root/.s3cfg
 RUN echo "host_bucket = %(bucket)s.nyc3.digitaloceanspaces.com" >> /root/.s3cfg
 
