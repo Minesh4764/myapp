@@ -27,8 +27,8 @@ jobs:
           context: .
           push: true
           build-args: |
-            S3_ACCESS_KEY: ${{ secrets.S3_ACCESS_KEY }}
-            S3_SECRET_KEY: ${{ secrets.S3_SECRET_KEY }} 
+            S3_ACCESS_KEY=${{ secrets.S3_ACCESS_KEY }}
+            S3_SECRET_KEY=${{ secrets.S3_SECRET_KEY }}
           tags: registry.digitalocean.com/${{ env.REGISTRY_NAME }}/${{ env.IMAGE_NAME }}:latest
         env:
           DOCKER_USERNAME: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
